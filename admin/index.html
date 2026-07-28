@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - نظام إدارة المكتبة</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- شاشة تسجيل الدخول -->
+    <div class="login-page" id="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <i class="fas fa-book-open"></i>
+                    <h1>لوحة التحكم</h1>
+                    <p>نظام إدارة المكتبة</p>
+                </div>
+                <form id="login-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> اسم المستخدم</label>
+                        <input type="text" id="login-username" required placeholder="admin" value="admin">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> كلمة المرور</label>
+                        <input type="password" id="login-password" required placeholder="أدخل كلمة المرور">
+                    </div>
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                    </button>
+                    <div class="login-error" id="login-error" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="login-error-message">بيانات الدخول غير صحيحة</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- لوحة التحكم الرئيسية -->
+    <div class="admin-layout" id="admin-layout" style="display: none;">
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-book-open"></i>
+                <span>لوحة التحكم</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" onclick="showSection('dashboard')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>الرئيسية</span>
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('books')">
+                    <i class="fas fa-book"></i>
+                    <span>الكتب</span>
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('categories')">
+                    <i class="fas fa-th-large"></i>
+                    <span>التصنيفات</span>
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('authors')">
+                    <i class="fas fa-users"></i>
+                    <span>المؤلفين</span>
+                </a>
+                <a href="#" class="nav-item" onclick="showSection('settings')">
+                    <i class="fas fa-cog"></i>
+                    <span>الإعدادات</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/" target="_blank" class="nav-item">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>عرض الموقع</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل الخروج</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- رأس الصفحة -->
+            <header class="admin-header">
+                <button class="sidebar-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h2 id="page-title">لوحة التحكم</h2>
+                <div class="admin-user">
+                    <i class="fas fa-user-circle"></i>
+                    <span>المدير</span>
+                </div>
+            </header>
+
+            <!-- قسم لوحة التحكم -->
+            <div class="content-section" id="section-dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon books-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-total-books">0</h3>
+                            <p>إجمالي الكتب</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon available-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-available">0</h3>
+                            <p>متوفر</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon out-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-out-of-stock">0</h3>
+                            <p>نفد المخزون</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon hidden-icon">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-hidden">0</h3>
+                            <p>مخفي</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon categories-icon">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-categories">0</h3>
+                            <p>التصنيفات</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon authors-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-authors">0</h3>
+                            <p>المؤلفين</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم الكتب -->
+            <div class="content-section" id="section-books" style="display: none;">
+                <div class="section-header">
+                    <h2>إدارة الكتب</h2>
+                    <button class="btn-primary" onclick="openBookModal()">
+                        <i class="fas fa-plus"></i> إضافة كتاب
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الغلاف</th>
+                                <th>العنوان</th>
+                                <th>المؤلف</th>
+                                <th>التصنيف</th>
+                                <th>السعر</th>
+                                <th>الحالة</th>
+                                <th>التقييم</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="books-table-body">
+                            <!-- سيتم تحميل البيانات هنا -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- قسم التصنيفات -->
+            <div class="content-section" id="section-categories" style="display: none;">
+                <div class="section-header">
+                    <h2>إدارة التصنيفات</h2>
+                    <button class="btn-primary" onclick="openCategoryModal()">
+                        <i class="fas fa-plus"></i> إضافة تصنيف
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>الاسم الإنجليزي</th>
+                                <th>تاريخ الإنشاء</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categories-table-body">
+                            <!-- سيتم تحميل البيانات هنا -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- قسم المؤلفين -->
+            <div class="content-section" id="section-authors" style="display: none;">
+                <div class="section-header">
+                    <h2>إدارة المؤلفين</h2>
+                    <button class="btn-primary" onclick="openAuthorModal()">
+                        <i class="fas fa-plus"></i> إضافة مؤلف
+                    </button>
+                </div>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>نبذة</th>
+                                <th>تاريخ الإنشاء</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="authors-table-body">
+                            <!-- سيتم تحميل البيانات هنا -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- قسم الإعدادات -->
+            <div class="content-section" id="section-settings" style="display: none;">
+                <div class="section-header">
+                    <h2>إعدادات الموقع</h2>
+                </div>
+                <div class="settings-form-container">
+                    <form id="settings-form" onsubmit="saveSettings(event)">
+                        <div class="settings-grid">
+                            <div class="form-group">
+                                <label>اسم المتجر</label>
+                                <input type="text" id="setting-storeName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>الاسم الإنجليزي</label>
+                                <input type="text" id="setting-storeNameEn">
+                            </div>
+                            <div class="form-group">
+                                <label>رقم الهاتف</label>
+                                <input type="text" id="setting-phone">
+                            </div>
+                            <div class="form-group">
+                                <label>البريد الإلكتروني</label>
+                                <input type="email" id="setting-email">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>العنوان</label>
+                                <input type="text" id="setting-address">
+                            </div>
+                            <div class="form-group">
+                                <label>العملة</label>
+                                <input type="text" id="setting-currency" placeholder="MAD">
+                            </div>
+                            <div class="form-group">
+                                <label>ساعات العمل</label>
+                                <input type="text" id="setting-workingHours">
+                            </div>
+                            <div class="form-group">
+                                <label>فيسبوك</label>
+                                <input type="url" id="setting-facebook" placeholder="https://facebook.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label>إنستغرام</label>
+                                <input type="url" id="setting-instagram" placeholder="https://instagram.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label>تليجرام</label>
+                                <input type="url" id="setting-telegram" placeholder="https://t.me/...">
+                            </div>
+                            <div class="form-group full-width">
+                                <label>شعار المتجر</label>
+                                <div class="logo-upload">
+                                    <input type="file" id="setting-logo-file" accept="image/*" onchange="previewLogo(event)">
+                                    <img id="logo-preview" src="" alt="معاينة الشعار" style="display: none;">
+                                    <div class="upload-placeholder" id="logo-placeholder">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span>اختر شعاراً</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> حفظ الإعدادات
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- نافذة إضافة/تعديل الكتاب -->
+    <div class="modal" id="book-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="book-modal-title">إضافة كتاب جديد</h3>
+                <button class="close-modal" onclick="closeBookModal()">&times;</button>
+            </div>
+            <form id="book-form" onsubmit="saveBook(event)">
+                <div class="modal-body">
+                    <input type="hidden" id="book-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>عنوان الكتاب *</label>
+                            <input type="text" id="book-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label>المؤلف *</label>
+                            <select id="book-author" required>
+                                <option value="">اختر مؤلفاً</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>التصنيف *</label>
+                            <select id="book-category" required>
+                                <option value="">اختر تصنيفاً</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>ISBN</label>
+                            <input type="text" id="book-isbn">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>السعر *</label>
+                            <input type="number" id="book-price" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>الكمية المتوفرة</label>
+                            <input type="number" id="book-stock" min="0" value="0">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>التقييم (0-5)</label>
+                            <input type="number" id="book-rating" min="0" max="5" step="0.1" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>الحالة</label>
+                            <select id="book-status">
+                                <option value="available">متوفر</option>
+                                <option value="out_of_stock">نفد المخزون</option>
+                                <option value="hidden">مخفي</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>الوصف</label>
+                        <textarea id="book-description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>صورة الغلاف</label>
+                        <div class="image-upload" id="book-cover-upload">
+                            <input type="file" id="book-cover-file" accept="image/*" onchange="previewCover(event)">
+                            <img id="cover-preview" src="" alt="معاينة" style="display: none;">
+                            <div class="upload-placeholder" id="cover-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>اختر صورة</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="book-cover-url">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeBookModal()">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة/تعديل التصنيف -->
+    <div class="modal" id="category-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="category-modal-title">إضافة تصنيف جديد</h3>
+                <button class="close-modal" onclick="closeCategoryModal()">&times;</button>
+            </div>
+            <form id="category-form" onsubmit="saveCategory(event)">
+                <div class="modal-body">
+                    <input type="hidden" id="category-id">
+                    <div class="form-group">
+                        <label>اسم التصنيف *</label>
+                        <input type="text" id="category-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>الاسم الإنجليزي</label>
+                        <input type="text" id="category-nameEn">
+                    </div>
+                    <div class="form-group">
+                        <label>الوصف</label>
+                        <textarea id="category-description" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeCategoryModal()">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة/تعديل المؤلف -->
+    <div class="modal" id="author-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="author-modal-title">إضافة مؤلف جديد</h3>
+                <button class="close-modal" onclick="closeAuthorModal()">&times;</button>
+            </div>
+            <form id="author-form" onsubmit="saveAuthor(event)">
+                <div class="modal-body">
+                    <input type="hidden" id="author-id">
+                    <div class="form-group">
+                        <label>اسم المؤلف *</label>
+                        <input type="text" id="author-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>نبذة عن المؤلف</label>
+                        <textarea id="author-bio" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeAuthorModal()">إلغاء</button>
+                    <button type="submit" class="btn-primary">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- رسالة Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toast-message">تمت العملية بنجاح</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin.js"></script>
+</body>
+</html>

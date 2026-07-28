@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتبة الكتاب - أفضل الكتب العربية والأجنبية</title>
+    <meta name="description" content="مكتبة الكتاب - تشكيلة واسعة من الكتب العربية والأجنبية بأفضل الأسعار">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- شريط التنقل العلوي -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <a href="index.html">
+                        <i class="fas fa-book-open"></i>
+                        <span id="store-name">مكتبة الكتاب</span>
+                    </a>
+                </div>
+                
+                <div class="nav-search">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="ابحث عن كتاب، مؤلف...">
+                        <button class="search-btn" onclick="performSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="nav-actions">
+                    <button class="nav-btn cart-btn" onclick="openCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي (Hero) -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>اكتشف عالم المعرفة</h1>
+                <p>تشكيلة واسعة من الكتب العربية والأجنبية بأفضل الأسعار</p>
+                <div class="hero-search">
+                    <input type="text" id="hero-search-input" placeholder="ابحث عن كتابك المفضل...">
+                    <button onclick="performHeroSearch()">ابحث</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-books">0</span>
+                        <span class="stat-label">كتاب</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-categories">0</span>
+                        <span class="stat-label">تصنيف</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-authors">0</span>
+                        <span class="stat-label">مؤلف</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-books">
+                    <div class="floating-book book-1"><i class="fas fa-book"></i></div>
+                    <div class="floating-book book-2"><i class="fas fa-book-reader"></i></div>
+                    <div class="floating-book book-3"><i class="fas fa-bookmark"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- فلتر البحث والتصنيفات -->
+    <section class="filters-section" id="filters">
+        <div class="container">
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>التصنيف:</label>
+                    <select id="filter-category" onchange="applyFilters()">
+                        <option value="">الكل</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>السعر:</label>
+                    <select id="filter-price" onchange="applyFilters()">
+                        <option value="">الكل</option>
+                        <option value="0-50">أقل من 50</option>
+                        <option value="50-100">50 - 100</option>
+                        <option value="100-200">100 - 200</option>
+                        <option value="200+">أكثر من 200</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>الترتيب:</label>
+                    <select id="filter-sort" onchange="applyFilters()">
+                        <option value="newest">الأحدث</option>
+                        <option value="price_asc">السعر: من الأقل للأعلى</option>
+                        <option value="price_desc">السعر: من الأعلى للأقل</option>
+                        <option value="alpha">أبجدي</option>
+                        <option value="rating">الأعلى تقييماً</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الكتب المميزة -->
+    <section class="section featured-section" id="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-star"></i> الكتب المميزة</h2>
+                <a href="#" class="see-all" onclick="showAllBooks('featured')">عرض الكل</a>
+            </div>
+            <div class="books-grid" id="featured-books">
+                <!-- سيتم تحميل الكتب هنا -->
+            </div>
+        </div>
+    </section>
+
+    <!-- التصنيفات -->
+    <section class="section categories-section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-th-large"></i> التصنيفات</h2>
+            </div>
+            <div class="categories-grid" id="categories-grid">
+                <!-- سيتم تحميل التصنيفات هنا -->
+            </div>
+        </div>
+    </section>
+
+    <!-- أحدث الكتب -->
+    <section class="section new-arrivals-section" id="new-arrivals">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-clock"></i> أحدث الكتب</h2>
+                <a href="#" class="see-all" onclick="showAllBooks('newest')">عرض الكل</a>
+            </div>
+            <div class="books-grid" id="new-arrivals-books">
+                <!-- سيتم تحميل الكتب هنا -->
+            </div>
+        </div>
+    </section>
+
+    <!-- الأكثر مبيعاً -->
+    <section class="section best-sellers-section" id="best-sellers">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-fire"></i> الأكثر مبيعاً</h2>
+                <a href="#" class="see-all" onclick="showAllBooks('best-sellers')">عرض الكل</a>
+            </div>
+            <div class="books-grid" id="best-sellers-books">
+                <!-- سيتم تحميل الكتب هنا -->
+            </div>
+        </div>
+    </section>
+
+    <!-- جميع الكتب -->
+    <section class="section all-books-section" id="all-books-section" style="display: none;">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-books"></i> جميع الكتب</h2>
+                <button class="btn-close-section" onclick="closeAllBooks()">إغلاق</button>
+            </div>
+            <div class="books-grid" id="all-books-grid">
+                <!-- سيتم تحميل الكتب هنا -->
+            </div>
+        </div>
+    </section>
+
+    <!-- نبذة عنا -->
+    <section class="section about-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-info-circle"></i> نبذة عنا</h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>مرحباً بكم في مكتبة الكتاب</h3>
+                    <p>نحن مكتبة متخصصة في توفير أفضل الكتب العربية والأجنبية في مختلف المجالات. نسعى لتقديم تجربة تسوق مميزة لعشاق الكتب والمعرفة.</p>
+                    <p>نوفر مجموعة واسعة من الكتب تشمل الروايات، العلوم، التاريخ، الفلسفة، الأدب العربي، وتطوير الذات، بالإضافة إلى العديد من التصنيفات الأخرى.</p>
+                    <div class="about-features">
+                        <div class="feature">
+                            <i class="fas fa-truck"></i>
+                            <span>توصيل سريع</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>دفع آمن</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-headset"></i>
+                            <span>دعم متواصل</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-contact">
+                    <h3>تواصل معنا</h3>
+                    <div class="contact-info" id="contact-info">
+                        <!-- سيتم تحميل معلومات الاتصال هنا -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 id="footer-store-name">مكتبة الكتاب</h3>
+                    <p>أفضل الكتب العربية والأجنبية بأفضل الأسعار</p>
+                </div>
+                <div class="footer-section">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="#hero">الرئيسية</a></li>
+                        <li><a href="#featured">الكتب المميزة</a></li>
+                        <li><a href="#categories">التصنيفات</a></li>
+                        <li><a href="#about">نبذة عنا</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>تواصل معنا</h4>
+                    <div class="social-links" id="social-links">
+                        <!-- سيتم تحميل الروابط هنا -->
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 <span id="footer-copyright-name">مكتبة الكتاب</span>. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- سلة المشتريات -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-cart"></i> سلة المشتريات</h3>
+            <button class="close-cart" onclick="closeCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- سيتم تحميل عناصر السلة هنا -->
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display: none;">
+            <div class="cart-total">
+                <span>الإجمالي:</span>
+                <span id="cart-total">0</span>
+            </div>
+            <button class="btn-checkout" onclick="openCheckout()">إتمام الشراء</button>
+            <button class="btn-clear-cart" onclick="clearCart()">تفريغ السلة</button>
+        </div>
+        <div class="cart-empty" id="cart-empty">
+            <i class="fas fa-shopping-cart"></i>
+            <p>سلتك فارغة</p>
+        </div>
+    </div>
+
+    <!-- نافذة الدفع -->
+    <div class="checkout-modal" id="checkout-modal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h3><i class="fas fa-credit-card"></i> إتمام الطلب</h3>
+                <button class="close-checkout" onclick="closeCheckout()">&times;</button>
+            </div>
+            <form id="checkout-form" onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label>الاسم الكامل *</label>
+                    <input type="text" id="customer-name" required placeholder="أدخل اسمك الكامل">
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف *</label>
+                    <input type="tel" id="customer-phone" required placeholder="أدخل رقم هاتفك">
+                </div>
+                <div class="form-group">
+                    <label>العنوان *</label>
+                    <textarea id="customer-address" required placeholder="أدخل عنوانك الكامل"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ملاحظات إضافية</label>
+                    <textarea id="customer-notes" placeholder="أي ملاحظات إضافية..."></textarea>
+                </div>
+                <div class="order-summary">
+                    <h4>ملخص الطلب</h4>
+                    <div id="order-summary-items"></div>
+                    <div class="order-total">
+                        <span>الإجمالي:</span>
+                        <span id="order-total">0</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn-submit-order" id="submit-order-btn">
+                    <i class="fas fa-paper-plane"></i> تأكيد الطلب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- رسالة التحميل -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- رسالة النجاح -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span id="toast-message">تمت العملية بنجاح</span>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/checkout.js"></script>
+</body>
+</html>

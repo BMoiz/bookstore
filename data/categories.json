@@ -1,0 +1,38 @@
+[
+  {
+    "id": "cat-1",
+    "name": "روايات",
+    "nameEn": "Novels",
+    "createdAt": "2026-07-28T13:11:00.627Z"
+  },
+  {
+    "id": "cat-2",
+    "name": "علوم",
+    "nameEn": "Science",
+    "createdAt": "2026-07-28T13:11:00.627Z"
+  },
+  {
+    "id": "cat-3",
+    "name": "تاريخ",
+    "nameEn": "History",
+    "createdAt": "2026-07-28T13:11:00.627Z"
+  },
+  {
+    "id": "cat-4",
+    "name": "فلسفة",
+    "nameEn": "Philosophy",
+    "createdAt": "2026-07-28T13:11:00.627Z"
+  },
+  {
+    "id": "cat-5",
+    "name": "أدب عربي",
+    "nameEn": "Arabic Literature",
+    "createdAt": "2026-07-28T13:11:00.627Z"
+  },
+  {
+    "id": "cat-6",
+    "name": "تطوير ذات",
+    "nameEn": "Self Development",
+    "createdAt": "2026-07-28T13:11:00.627Z"
+  }
+]

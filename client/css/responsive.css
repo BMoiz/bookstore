@@ -1,0 +1,246 @@
+/**
+ * ملف الأنماط المتجاوبة - Responsive Stylesheet
+ * 
+ * الغرض: تعديل أنماط الموقع للشاشات المختلفة
+ * المدخلات: لا توجد
+ * المخرجات: أنماط CSS متجاوبة
+ * Responsibilities: ضمان ظهور الموقع بشكل صحيح على جميع الأجهزة
+ */
+
+/* ==============================
+   الأجهزة اللوحية (Tablets)
+   ============================== */
+@media (max-width: 1024px) {
+    .hero .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hero-image {
+        display: none;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+    }
+    
+    .hero-search {
+        max-width: 500px;
+        margin: 0 auto 40px;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+}
+
+/* ==============================
+   الهواتف (Mobile)
+   ============================== */
+@media (max-width: 768px) {
+    :root {
+        --header-height: 60px;
+    }
+    
+    /* شريط التنقل */
+    .navbar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .nav-brand a {
+        font-size: 1.2rem;
+    }
+    
+    .nav-search {
+        order: 3;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    /* القسم الرئيسي */
+    .hero {
+        padding: 50px 0;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .hero-search {
+        flex-direction: column;
+    }
+    
+    .hero-search button {
+        width: 100%;
+    }
+    
+    .hero-stats {
+        gap: 20px;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    /* الأقسام */
+    .section {
+        padding: 40px 0;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .section-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    /* الفلاتر */
+    .filters-bar {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filter-group select {
+        width: 100%;
+    }
+    
+    /* الكتب */
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+    }
+    
+    .book-cover {
+        height: 150px;
+    }
+    
+    .book-info {
+        padding: 15px;
+    }
+    
+    .book-title {
+        font-size: 0.95rem;
+    }
+    
+    .book-price {
+        font-size: 1.1rem;
+    }
+    
+    .btn-add-cart {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+    
+    /* التصنيفات */
+    .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+    }
+    
+    .category-card {
+        padding: 20px;
+    }
+    
+    .category-card i {
+        font-size: 2rem;
+    }
+    
+    /* نبذة عنا */
+    .about-content {
+        padding: 25px;
+    }
+    
+    .about-features {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    /* التذييل */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    /* سلة المشتريات */
+    .cart-sidebar {
+        width: 100%;
+    }
+    
+    /* نافذة الدفع */
+    .checkout-content {
+        max-height: 100vh;
+        border-radius: 0;
+    }
+}
+
+/* ==============================
+   الهواتف الصغيرة (Small Mobile)
+   ============================== */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+    
+    .books-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .cart-item-image {
+        margin: 0 auto;
+    }
+}
+
+/* ==============================
+   الشاشات الكبيرة (Large Screens)
+   ============================== */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+    
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+    
+    .books-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
